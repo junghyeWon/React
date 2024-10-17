@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+
+    <!-- JSX 코드화 시켜주는 소스, 코드변환이 필요한 스크립트에도 타입 삽입이 필요 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        /*
+        태그생성 React.createElement(tag, property, content) property가 업는경우 null
+
+        HTML 배치
+
+        react 17버전
+        ReactDOM.render(삽입할 변수명, 위치)
+
+        react 18버전
+        ReactDOM.createRoot(위치).render(삽입할 변수명)
+        */
+
+        const root = document.getElementById('root');
+        function Title() {
+            return (
+                <h3 id="title" onMouseEnter={() => console.log('mouse enter')}>
+                    Hello I'm a title
+                </h3>
+            )
+        };
+        // const h3 = React.createElement( 'h3', id : 'title', onMouseEnter : () => console.log('mouse enter') }, null, "Hello I'm a Title" );
+
+        const Button = () => (
+            <button onClick={() => console.log("I'm clicked")}>
+                Click me
+            </button>
+        );
+        // const btn = React.createElement('button', { onClick: () => console.log("I'm clicked") }, 'Click me');
+
+        // const container = React.createElement('div', null, [h3, btn]);
+        // const container = React.createElement('div', null, [Title, Button]);
+        // component의 첫글자는 대문자로 작성
+        const Container = () => (
+            <div>
+                <Title />
+                <Button />
+            </div>
+        );
+
+        // ReactDOM.render(h3, root);
+        // ReactDOM.render(container, root);
+        // ReactDOM.render(Container, root);
+        ReactDOM.render(<Container />, root);
+    </script>
+</html>
