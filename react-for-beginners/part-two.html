@@ -9,10 +9,18 @@
     <script type="text/babel">
         const root = document.getElementById('root');
         function App() {
-            const [counter, setCounter] = React.useState(0); // 역배열로 변수를 담아주는 방법
+            // 역배열로 변수를 담아주는 방법
+            const [counter, setCounter] = React.useState(0);
             const onClick = () => {
-                setCounter(counter+1);
-            }
+                /**
+                * state를 세팅 해주는 2가지 방식
+                * 1. 직접 값을 설정
+                * setCounter(counter+1);
+                * 2.함수를 전달
+                * setCounter((current) => current + 1);
+                */
+                setCounter((current) => current + 1);
+            };
             return (
                 <div>
                     <h3>Total clicks : {counter}</h3>

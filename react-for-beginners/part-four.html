@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <body>
+        <div id="root"></div>
+    </body>
+    <!--<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>-->
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        // 리액트 방식 2번 (shortcut 방식 선호)
+        function Btn({text, fontSize = 12, changeVal}) {
+            return (
+                <button
+                    onClick={changeVal}
+                    style={{backgroundColor:"tomato", color:"white", padding:"10px 20px", border:0, borderRadius: 10, fontSize }}
+                >
+                    {text}
+                </button>
+            );
+        }
+        // 리액트 방식 1번 (비선호)
+        /*function Btn(props) {
+            console.log(props);
+            return (
+                <button style={{backgroundColor:"tomato", color:"white", padding:"10px 20px", border:0, borderRadius: 10, fontSize: 16px }}>
+                    {props.text}
+                </button>
+            );
+        }*/
+        /* 기존방식
+        function SaveBtn() {
+            return <button style={{backgroundColor:"tomato", color:"white", padding:"10px 20px", border:0, borderRadius: 10, fontSize: 16px }}>Save changes</button>;
+        }
+        function ConfirmBtn() {
+            return <button style={{backgroundColor:"tomato", color:"white", padding:"10px 20px", border:0, borderRadius: 10, fontSize: 16px }}>Confirm</button>;
+        }*/
+
+        // React Memo 기능 : 변경되지 않은 데이터는 re-rend 하지않음
+        /*const MemorizedBtn = React.memo(Btn);
+        <MemorizedBtn text={value} changeVal={changeValue} />
+        <MemorizedBtn text="Continue" />*/
+
+        // 컴포넌트 props 정의, 필수사용 지정 .isRequired
+        Btn.propTypes = {
+            text: PropTypes.string.isRequired,
+            fontSize:PropTypes.number,
+            changeVal:PropTypes.func
+        }
+
+        function App() {
+            const [value, setValue] = React.useState("Save changes");
+            const changeValue = () => setValue("Revert Changes");
+            return (
+                <div>
+                    {/* 컴포넌트에는 props만 추가될뿐, 속성을 넣을수 없음! */}
+                    <Btn text={value} fontSize={18} changeVal={changeValue} />
+                    <Btn text="Continue" />
+                    {/*<SaveBtn />
+                    <ConfirmBtn />*/}
+                </div>
+            );
+        }
+        const root = document.getElementById('root');
+        ReactDOM.render(<App/>, root);
+    </script>
+</html>
