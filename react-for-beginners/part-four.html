@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
         // 리액트 방식 2번 (shortcut 방식 선호)
-        function Btn({text, fontSize = 12, changeVal}) {
+        function Btn({ text, fontSize = 12, changeVal }) {
             return (
                 <button
                     onClick={changeVal}
@@ -42,7 +42,7 @@
         <MemorizedBtn text={value} changeVal={changeValue} />
         <MemorizedBtn text="Continue" />*/
 
-        // 컴포넌트 props 정의, 필수사용 지정 .isRequired
+        // 컴포넌트 props 정의, 필수사용 지정 .isRequired (정의된 대로 사용되지 않을경우 콘솔창에 error)
         Btn.propTypes = {
             text: PropTypes.string.isRequired,
             fontSize:PropTypes.number,

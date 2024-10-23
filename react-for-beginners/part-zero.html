@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
         /*
-        태그생성 React.createElement(tag, property, content) property가 업는경우 null
+        태그생성 React.createElement(tag, property, content) property가 없는경우 null
 
         HTML 배치
 
@@ -28,7 +28,7 @@
                     Hello I'm a title
                 </h3>
             )
-        };
+        }
         // const h3 = React.createElement( 'h3', id : 'title', onMouseEnter : () => console.log('mouse enter') }, null, "Hello I'm a Title" );
 
         const Button = () => (
