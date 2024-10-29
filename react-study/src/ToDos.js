@@ -17,7 +17,7 @@ function ToDos() {
     }
     // console.log(toDos);
     return (
-        <div>
+        <div className="guide_wrap">
             <h1>My To Dos ({toDos.length})</h1>
             <form onSubmit={onSubmit}>
                 <input type="text" placeholder="Write your to do..." value={toDo} onChange={onChangeValue} />&nbsp;

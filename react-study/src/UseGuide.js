@@ -67,15 +67,20 @@ function UseGuide(){
 
     return (
         <div>
-            <input type="text" placeholder="Serach here..." onChange={onChange} value={keyword}/>
-            <div>
-                <h2 style={{display: "inline-block"}}>Click Count : {counter}</h2>&nbsp;
-                <button onClick={onClick}>click me</button>
-            </div>
+            <div className="guide_wrap">
+                <h1>Search</h1>
+                <input type="text" placeholder="Serach here..." onChange={onChange} value={keyword}/>
+                <div className="click_counter">
+                    <h1>Click Count : {counter}</h1>&nbsp;
+                    <button onClick={onClick}>click me</button>
+                </div>
 
-            {showing ? <Hello/> : null}
-            {/*{showing ? <HelloLong /> : null}*/}
-            <button onClick={onClickBtn}>{showing ? "Hide" : "Show"}</button>
+                <br/>
+                {showing ? <Hello/> : null}
+                {/*{showing ? <HelloLong /> : null}*/}
+                <button onClick={onClickBtn}>{showing ? "Hide" : "Show"}</button>
+                <span className="info_txt">Press the button and check the console.</span>
+            </div>
         </div>
     );
 }
