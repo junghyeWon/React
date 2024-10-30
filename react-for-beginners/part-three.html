@@ -12,6 +12,7 @@
             const [inverted, setInverted] = React.useState(false);
             const onChange = (event) => {
                 setAmount(event.target.value);
+                console.log(typeof event.target.value)
             };
             const reset = () => setAmount(0);
             const onInvert = () => {

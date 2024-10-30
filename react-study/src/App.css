@@ -11,12 +11,23 @@ p { font-size:14px; }
 
 .guide_wrap { padding:30px; }
 
-.click_counter { margin:15px 0 0; }
-.click_counter h1 { margin:0; display:inline-block; vertical-align:middle }
+.click_counter {
+    margin:15px 0 0;
+    h1 { margin:0; display:inline-block; vertical-align:middle }
+}
 
 .info_txt { font-size:14px; padding:0 0 0 10px; }
 
-.cryptocurrency select { width:200px; font-size:15px; }
-.cryptocurrency input { width:140px; text-align:right; padding:0; }
-.cryptocurrency div { margin:20px 0 0; font-weight:700; }
-.cryptocurrency div div { margin:10px 0 0; }
+.cryptocurrency {
+    select { font-size:14px; }
+    input {
+        width:140px; text-align:right; padding:0 10px;
+        &:first-of-type { width:100px; margin:0 5px 0 0; }
+    }
+    p { margin:0 0 20px; }
+    div div { margin:10px 0 0; font-weight:700; }
+    span { display:block; margin:10px 0 0; }
+    input { margin:0 10px 0 0; }
+    label { margin:0 10px 0 0; }
+    button { margin:0 10px 0 0; }
+}
