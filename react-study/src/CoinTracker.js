@@ -16,7 +16,6 @@ function CoinTracker() {
             setSelectedCoin(event.target.value);
             setSelectedUnits(true);
         }
-        console.log(selectedUnits)
     };
     const converter = (event) => setAmount(event.target.value);
     const onInvert = () => {
@@ -24,8 +23,8 @@ function CoinTracker() {
         setInverted((current) => !current);
     };
     useEffect(() => {
-        fetch("https://api.coinpaprika.com/v1/tickers?limit=5& quotes=USD,BTC,KRW")
-            .then(response => response.json())
+        fetch("https://api.coinpaprika.com/v1/tickers?limit=3& quotes=USD,BTC,KRW")
+            .then((response) => response.json())
             .then(json => {
                 setCoins(json);
                 //setSelectedCoin의 초기값이 0인 경우 금액입력을 해도 결과가 NaN이 되버림 (첫 코인의 가격을 넣어두기)
@@ -49,7 +48,7 @@ function CoinTracker() {
                         <label htmlFor="myUsd">Your USD</label>
                         <input id="myUsd" type="number" value={inverted ? (selectedCoin * amount).toFixed(2) : amount} onChange={converter} disabled={inverted || !selectedUnits} />
                         <label htmlFor="btc">What coins can you get?</label>
-                        <input id="btc" type="number" value={inverted ? amount : (amount / selectedCoin).toFixed(2)} onChange={converter} disabled={!inverted && !selectedUnits} />
+                        <input id="btc" type="number" value={inverted ? amount : (amount / selectedCoin).toFixed(2)} onChange={converter} disabled={!inverted} />
                         <span>
                             <button onClick={onInvert}>Invert</button>
                             <button onClick={reset}>Reset</button>
