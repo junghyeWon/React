@@ -1,25 +1,15 @@
-import UseGuide from './UseGuide';
-import ToDos from './ToDos';
-import CoinTracker from './CoinTracker';
-import MovieApp from './MovieApp';
-
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './routes/Home';
+import Detail from './routes/Detail';
 
 function App() {
     return (
-        <div>
-            <UseGuide/>
-            <hr/>
-
-            <ToDos/>
-            <hr/>
-
-            <CoinTracker/>
-            <hr/>
-
-            <MovieApp/>
-            <hr/>
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/movie" element={<Detail />} />
+            </Routes>
+        </Router>
     );
 }
 
