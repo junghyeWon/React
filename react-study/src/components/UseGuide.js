@@ -18,7 +18,7 @@ function Hello(){
         };
     }, []);
     // return <h1>Hello</h1>;
-    return;
+    // return;
 }
 
 // Hello 와 같은걸 풀어쓴것
