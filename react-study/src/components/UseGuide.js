@@ -47,19 +47,19 @@ function UseGuide(){
 
     // useEffect 사용법
     /*useEffect(() => {
-        console.log("i run only once");
+        console.log("I run only once");
     }, []);
     useEffect(() => {
         /!*if(keyword !== "" && keyword.length > 5){
             console.log("SEARCH FOR", keyword);
         }*!/
-        console.log("i run when 'keyword' changes.");
+        console.log("I run when 'keyword' changes.");
     }, [keyword]);
     useEffect(() => {
-        console.log("i run when 'counter' changes.");
+        console.log("I run when 'counter' changes.");
     }, [counter]);
     useEffect(() => {
-        console.log("i run when keyword & counter changes.");
+        console.log("I run when keyword & counter changes.");
     }, [keyword, counter]);*/
 
     const [showing, setShowing] = useState(false);
