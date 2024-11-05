@@ -33,7 +33,7 @@ p { font-size:14px; }
 }
 
 .movie_list {
-    display:flex; flex-wrap:wrap;
+    max-width:1000px; display:flex; flex-wrap:wrap;
     .item {
         width:20%; box-sizing:border-box; background-color: #d4c3eb;
         div { padding:10px 15px 15px; }

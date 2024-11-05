@@ -33,30 +33,30 @@ function Movies(){
             setLoading(false);
         });*/
     }, []);
-    // console.log(movies);
+    console.log(movies);
 
     return (
         <div className="guide_wrap">
             {loading ? (<strong>Loading...</strong>) : (
             <div className="movie_list">
                 {movies.map((movie) => (
-                    <Movie key={movie.id} coverImg={movie.medium_cover_image} title={movie.title} summary={movie.summary} genres={movie.genres} />
+                    <Movie key={movie.id} id={movie.id} coverImg={movie.medium_cover_image} title={movie.title} summary={movie.summary} genres={movie.genres} />
                 ))}
             </div>
             )}
         </div>
 
-        // 기존 map 안에서 돌던 마크업을 Movie 컴포넌트로 분리
+        // 기존 movies map 안에서 돌던 마크업을 Movie 컴포넌트로 분리
         /*<div className="item" key={movie.id}>
-                        <img src={movie.medium_cover_image} alt={movie.title} />
-                        <div>
-                            <strong>{movie.title}</strong>
-                            <span>{movie.summary}</span>
-                            <ul>
-                                {movie.genres.map((g) => <li key={g}>{g}</li>)}
-                            </ul>
-                        </div>
-                    </div>*/
+            <img src={movie.medium_cover_image} alt={movie.title} />
+            <div>
+                <strong>{movie.title}</strong>
+                <span>{movie.summary}</span>
+                <ul>
+                    {movie.genres.map((g) => <li key={g}>{g}</li>)}
+                </ul>
+            </div>
+        </div>*/
     );
 }
 
