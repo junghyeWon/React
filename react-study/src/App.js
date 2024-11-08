@@ -7,11 +7,12 @@ function App() {
     return (
         // ex) BrowserRouter : http://localhost:3000/movie HashRouter : http://localhost:3000/#/movie
         // path 뒤에 넘겨주는 값이 궁금하다면, :xxxx 로 넘겨주면 useParams 로 받을수 있다
+        // basename={process.env.PUBLIC_URL}
         <BrowserRouter>
-            <Routes>
-                <Route path={`${process.env.PUBLIC_URL}/`} element={<Home />} />
-                <Route path={`${process.env.PUBLIC_URL}/movie/:id`} element={<Detail />} />
-                <Route path={`${process.env.PUBLIC_URL}/hello`} element={<h1>hello</h1>} />
+            <Routes basename={process.env.PUBLIC_URL}>
+                <Route path="/" element={<Home />} />
+                <Route path="/movie:id" element={<Detail />} />
+                <Route path="/hello" element={<h1>hello</h1>} />
             </Routes>
         </BrowserRouter>
 
