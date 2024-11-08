@@ -2,7 +2,6 @@ import UseGuide from "../components/UseGuide";
 import ToDos from "../components/ToDos";
 import CoinTracker from "../components/CoinTracker";
 import Movies from "../components/Movies";
-import ReactRouter from "../ReactRouter";
 
 function Home(){
     return (
@@ -17,10 +16,6 @@ function Home(){
             <hr/>
 
             <Movies />
-            <hr/>
-
-            <ReactRouter />
-            <hr/>
         </div>
     );
 }
