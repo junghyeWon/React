@@ -2,7 +2,7 @@ import './App.module.css';
 
 function App() {
     return (
-        <div>Movie-App</div>
+        <div>React App</div>
     );
 }
 
