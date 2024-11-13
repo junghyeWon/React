@@ -50,6 +50,7 @@ function ToDos() {
                     <ul>
                         {taskObj.map((tasks) => (
                             <li key={tasks.id}>
+                                <input type="checkbox" name="chk" checked={tasks.check}/>
                                 <p>{tasks.text}</p>
                                 <button onClick={deleteBtn} data-id={tasks.id}>Delete</button>
                             </li>
