@@ -1,67 +1,106 @@
 import styles from './ToDos.module.css';
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 
 function ToDos() {
-    const indexNum = useRef(1);
+    // 페이지 로딩될때, localStorage 내용 업데이트
+    useEffect(() => {
+        init();
+    }, []);
+
+    const [loading, setLoading] = useState(false);
     const [taskObj, setTaskObj] = useState([]);
+    const [indexNum, setIndexNum] = useState(1);
     const [userTask, setUserTask] = useState("");
 
-    const changeText = (event) => setUserTask(event.target.value);
-    const onSubmitTask = (event) => {
-        event.preventDefault();
+    const init = () => {
+        // localStorage 데이터 로드
+        const getItemTodos = localStorage.getItem("localTodos");
+        if(getItemTodos !== null) {
+            const parsedTodos = JSON.parse(getItemTodos);
+            setTaskObj(parsedTodos);
+
+            // 고유 id 값을 위해 마지막 id 값 찾기
+            const lastId = parsedTodos.length > 0 ? parsedTodos[parsedTodos.length - 1].id : 0;
+            setIndexNum(lastId + 1); // 마지막 id + 1을 indexNum 초기값으로 설정
+        }
+
+        // loading 되고나면 true 로 변경
+        setLoading(true);
+    }
+    const changeText = (e) => setUserTask(e.target.value);
+    const onSubmit = (e) => {
+        e.preventDefault();
 
         const newTask = [...taskObj];
         newTask.push({
-            id:indexNum.current,
+            id:indexNum,
             text:userTask,
             check:false
         });
-
-        indexNum.current++;
-
+        setIndexNum(indexNum + 1);
         setTaskObj(newTask);
         setUserTask("");
+        localStorage.setItem("localTodos", JSON.stringify(newTask));
+    }
+    const onDelete = (e) => {
+        const _this = Number(e.target.dataset.id);
+        setTaskObj((prevTaskObj) => {
+            // prevTaskObj 기반으로 새로운 배열을 반환
+            const deleteObj = prevTaskObj.filter((item) => item.id !== _this);
+            // 로컬 스토리지에 저장
+            localStorage.setItem("localTodos", JSON.stringify(deleteObj));
+            return deleteObj;
+        });
+    }
+    const onModify = () => {
+        console.log("modify");
     }
 
-    const deleteBtn = (event) => {
-        const _this = Number(event.target.dataset.id);
-        const updateObj = taskObj.filter((item) => item.id !== _this);
-        setTaskObj(updateObj);
+    function updateTask(arg){
+        return function(event){
+            if(arg === "onSubmit"){
+                onSubmit(event);
+            }else if(arg === "onDelete"){
+                onDelete(event);
+            }else if(arg === "onModify"){
+                onModify();
+            }else{
+                console.log("error");
+            }
+        }
     }
-
-    useEffect(() => {
-        console.log(taskObj);
-    }, [taskObj])
 
     return (
-        <div className={styles.todo}>
-            <h2>TO DO LIST</h2>
-            <div className={styles.todo__form}>
-                <form onSubmit={onSubmitTask}>
-                    <fieldset>
-                        <legend>register a new task</legend>
-                        <input type="text" placeholder="What do you need to do?" onChange={changeText} value={userTask} />
-                        <button type="submit"><span>Add new task</span></button>
-                    </fieldset>
-                </form>
-            </div>
-            <div className="list_wrap">
-                {taskObj.length <= 0 ? <strong>No task</strong> :
+        <div>
+            {loading ? (
+            <div className={styles.todo}>
+                <h2>TO DO LIST</h2>
+                <div className={styles.todo__form}>
+                    <form onSubmit={updateTask("onSubmit")}>
+                        <fieldset>
+                            <legend>register a new task</legend>
+                            <input type="text" placeholder="What do you need to do?" onChange={changeText} value={userTask} />
+                            <button type="submit"><span>Add new task</span></button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div className="list_wrap">
+                    {/*taskObj.length > 0 ?*/
                     <ul>
                         {taskObj.map((tasks) => (
                             <li key={tasks.id}>
-                                <input type="checkbox" name="chk" checked={tasks.check}/>
+                                <input type="checkbox" name="chk"/>
                                 <p>{tasks.text}</p>
-                                <button onClick={deleteBtn} data-id={tasks.id}>Delete</button>
+                                <button onClick={updateTask("onDelete")} data-id={tasks.id}>Delete</button>
+                                <button onClick={updateTask("onModify")}>Modify</button>
                             </li>
                         ))}
-                        {/*read the book (at least 5 pages)
-                        buy dog food
-                        call my parents
-                        clean my working place*/}
                     </ul>
-                }
+                    // <p>read the book (at least 5 pages)<br/>buy dog food<br/>call my parents<br/>clean my working place</p>
+                    /*: <strong>No task</strong>*/}
+                </div>
             </div>
+            ) : null}
         </div>
     );
 }
