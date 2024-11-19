@@ -14,7 +14,7 @@ function ToDos() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!userTask) return alert("Please Add a new task"); // 공백일 경우
-        const newTask = { id: Date.now(), text: userTask, check: false }; // default
+        const newTask = { id: Date.now(), text: userTask, check: false, editing: false }; // default
         updateLocalStorage([...tasks, newTask]);
         setUserTask("");
     };
@@ -27,8 +27,18 @@ function ToDos() {
     };
 
     // 수정 및 업데이트
-    const handleModify = (e) => {
-        const taskId = Number(e.target.closest('li').dataset.id);
+    const handleModify = (e, id, editing) => {
+        console.log(e);
+        console.log(id, editing);
+
+        /*if(!editing){
+            const updatedTasks = tasks.map(task =>
+                task.id === id ? { ...task, text: modifiedText } : task
+            );
+            updateLocalStorage(updatedTasks);
+        }*/
+        // console.log(id)
+        /*const taskId = Number(e.target.closest('li').dataset.id);
         const isEditing = e.target.dataset.editing === "true";
         const contentElement = e.target.closest('li').querySelector("div");
 
@@ -44,7 +54,7 @@ function ToDos() {
             );
             updateLocalStorage(updatedTasks);
             e.target.innerHTML = "Modify";
-            e.target.dataset.editing = "false";
+            // e.target.dataset.editing = "false";
             contentElement.innerHTML = `<p><label for="chk_${taskId}">${modifiedText}</label></p>`;
         } else {
             const isChecked = e.target.parentNode.querySelector('input[type="checkbox"]').checked;
@@ -53,10 +63,10 @@ function ToDos() {
             }
 
             e.target.innerHTML = "Save";
-            e.target.dataset.editing = "true";
+            // e.target.dataset.editing = "true";
             const taskText = contentElement.querySelector("p") ? contentElement.querySelector("p").innerText : '';
             contentElement.innerHTML = `<input type="text" value="${taskText}" />`;
-        }
+        }*/
     }
 
     // 작업완료 구분
@@ -112,7 +122,7 @@ function ToDos() {
                                 <div className={styles.todo__user_task}>
                                     <p><label htmlFor={`chk_${tasks.id}`}>{tasks.text}</label></p>
                                 </div>
-                                <button onClick={handleModify} className={styles.todo__modify_btn}>Modify</button>
+                                <button onClick={() => handleModify(tasks, tasks.id, tasks.editing)} className={styles.todo__modify_btn}>Modify</button>
                                 <button onClick={() => handleDelete(tasks.id)} className={styles.todo__delete_btn}>Delete</button>
                             </li>
                         ))}
