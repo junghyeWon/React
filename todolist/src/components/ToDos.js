@@ -14,7 +14,7 @@ function ToDos() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!userTask) return alert("Please Add a new task"); // 공백일 경우
-        const newTask = { id: Date.now(), text: userTask, check: false, editing: false }; // default
+        const newTask = { id: Date.now(), text: userTask, check: false, editing: true }; // default
         updateLocalStorage([...tasks, newTask]);
         setUserTask("");
     };
@@ -27,52 +27,39 @@ function ToDos() {
     };
 
     // 수정 및 업데이트
-    const handleModify = (e, id, editing) => {
-        console.log(e);
-        console.log(id, editing);
+    const handleModify = (task, id, editing) => {
+        // 작업완료 상태에서는 수정불가
+        if (!editing) return alert('Please mark as not done 🤥');
 
-        /*if(!editing){
-            const updatedTasks = tasks.map(task =>
-                task.id === id ? { ...task, text: modifiedText } : task
-            );
-            updateLocalStorage(updatedTasks);
-        }*/
-        // console.log(id)
-        /*const taskId = Number(e.target.closest('li').dataset.id);
-        const isEditing = e.target.dataset.editing === "true";
-        const contentElement = e.target.closest('li').querySelector("div");
+        // 선택된 항목의 부모요소
+        const parentElement = document.querySelector(`[data-id='${id}']`);
+        const textElement = parentElement.querySelector('p');
+        const btnElement = parentElement.querySelector('button');
 
-        if (!contentElement) {
-            console.error("Content element not found");
-            return;
-        }
-
-        if (isEditing) {
-            const modifiedText = contentElement.querySelector("input").value;
-            const updatedTasks = tasks.map(task =>
-                task.id === taskId ? { ...task, text: modifiedText } : task
-            );
-            updateLocalStorage(updatedTasks);
-            e.target.innerHTML = "Modify";
-            // e.target.dataset.editing = "false";
-            contentElement.innerHTML = `<p><label for="chk_${taskId}">${modifiedText}</label></p>`;
-        } else {
-            const isChecked = e.target.parentNode.querySelector('input[type="checkbox"]').checked;
-            if(isChecked) {
-                return alert('Please mark as not done 🤥'); // checked 된 상태에서 수정불가
-            }
-
-            e.target.innerHTML = "Save";
-            // e.target.dataset.editing = "true";
-            const taskText = contentElement.querySelector("p") ? contentElement.querySelector("p").innerText : '';
-            contentElement.innerHTML = `<input type="text" value="${taskText}" />`;
-        }*/
+        toggleEditMode(textElement, task, id, btnElement);
     }
+
+    // 텍스트 수정 모드를 토글하는 함수
+    const toggleEditMode = (textElement, task, taskId, btnElement) => {
+        if (textElement && textElement.querySelector('input')) {
+            const inputElement = textElement.querySelector('input');
+            textElement.innerHTML = `<label for="chk_${taskId}">${inputElement.value}</label>`;
+            btnElement.innerText = `Modify`;
+
+            const updatedTasks = tasks.map(task =>
+                task.id === taskId ? { ...task, text: inputElement.value } : task
+            );
+            updateLocalStorage(updatedTasks);
+        } else {
+            textElement.innerHTML = `<input type="text" value=${task.text} />`;
+            btnElement.innerText = `Save`;
+        }
+    };
 
     // 작업완료 구분
     const handleToggleCheck = (taskId) => {
         const updatedTasks = tasks.map(task =>
-            task.id === taskId ? { ...task, check: !task.check } : task
+            task.id === taskId ? { ...task, check: !task.check, editing: !task.editing } : task
         );
         updateLocalStorage(updatedTasks);
     };
