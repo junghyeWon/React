@@ -1,11 +1,11 @@
 import Finder from "./components/Finder";
 
 function App() {
-  return (
+    return (
     <div>
         <Finder />
     </div>
-  );
+    );
 }
 
 export default App;
